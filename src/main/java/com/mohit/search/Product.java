@@ -1,11 +1,18 @@
-package com.example.demo;
+package com.mohit.search;
 
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 @Entity
-public class ProductClass {
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class Product {
 
+    @Id
     private String productId;
 
     private String productName;
@@ -14,7 +21,7 @@ public class ProductClass {
 
     private String longDescription;
 
-    private Float price;
+    private String price;
 
     private String productImage;
 
@@ -56,11 +63,11 @@ public class ProductClass {
         this.longDescription = longDescription;
     }
 
-    public Float getPrice() {
+    public String getPrice() {
         return price;
     }
 
-    public void setPrice(Float price) {
+    public void setPrice(String price) {
         this.price = price;
     }
 
