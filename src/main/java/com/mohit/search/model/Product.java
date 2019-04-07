@@ -1,35 +1,39 @@
-package com.mohit.search;
+package com.mohit.search.model;
 
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 
 @Entity
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class Product {
+
 
     @Id
     private String productId;
-
     private String productName;
-
+    @Column(name="shortDescription")
+    @Lob
     private String shortDescription;
-
+    @Column(name="longDescription")
+    @Lob
     private String longDescription;
-
     private String price;
-
     private String productImage;
-
     private int reviewRating;
-
     private int reviewCount;
-
     private boolean inStock;
+
+    public Product( String productId, String productName, String shortDescription) {
+        super();
+        this.productId = productId;
+        this.productName = productName;
+        this.shortDescription = shortDescription;
+    }
+
+    public Product() {
+
+    }
 
     public String getProductId() {
         return productId;

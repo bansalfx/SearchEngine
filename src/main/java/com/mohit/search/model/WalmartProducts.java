@@ -1,9 +1,8 @@
-package com.mohit.search;
+package com.mohit.search.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.Entity;
 import java.util.List;
 
 @Component
@@ -15,6 +14,17 @@ public class WalmartProducts {
     private int pageNumber;
     private int pageSize;
     private int statusCode;
+
+    public WalmartProducts(List<Product> products, int totalProducts, int pageNumber, int pageSize, int statusCode) {
+        this.products = products;
+        this.totalProducts = totalProducts;
+        this.pageNumber = pageNumber;
+        this.pageSize = pageSize;
+        this.statusCode = statusCode;
+    }
+
+    public WalmartProducts() {
+    }
 
     public List<Product> getProducts() {
         return products;
@@ -57,3 +67,5 @@ public class WalmartProducts {
     }
 
 }
+
+
