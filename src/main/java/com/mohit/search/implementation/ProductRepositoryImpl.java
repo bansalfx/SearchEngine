@@ -6,10 +6,7 @@ import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,21 +17,7 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
     private EntityManager entityManager;
 
     @Override
-    public List findAll(Float minPrice, Float maxPrice){
-        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Product> query = builder.createQuery(Product.class);
-        Root<Product> root = query.from(Product.class);
-
-        Predicate minPricePredicate = builder.greaterThanOrEqualTo(root.get("floatPrice"), minPrice);
-        Predicate maxPricePredicate = builder.lessThanOrEqualTo(root.get("floatPrice"), maxPrice);
-
-        query.where(builder.and(minPricePredicate, maxPricePredicate));
-
-        return entityManager.createQuery(query.select(root)).getResultList();
-    }
-
-    @Override
-    public List findFilteredProducts(Float minPrice, Float maxPrice, Integer minReviewRating, Integer maxReviewRating,
+    public List findFilteredProducts(List<String> productIdList, Float minPrice, Float maxPrice, Integer minReviewRating, Integer maxReviewRating,
                                      Integer minReviewCount, Integer maxReviewCount, Boolean inStock){
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Product> query = builder.createQuery(Product.class);
@@ -62,6 +45,10 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
         }
         if(inStock != null){
             predicateList.add(builder.equal(root.get("inStock"), inStock));
+        }
+        if(!productIdList.isEmpty()) {
+            Expression<String> exp = root.get("productId");
+            predicateList.add(exp.in(productIdList));
         }
 
         query.where(builder.and(predicateList.toArray(new Predicate[0])));

@@ -39,11 +39,11 @@ public class ProductTermsIndexer {
 
         for(Product product : productList) {
             LOGGER.info("Indexing the product with product Id: {}", product.getProductId());
-            indexString(product);
+            indexProductString(product);
         }
     }
 
-    public void indexString(Product product){
+    public void indexProductString(Product product){
 
         StringBuilder sb = new StringBuilder();
         if(product != null && product.getProductName() != null){

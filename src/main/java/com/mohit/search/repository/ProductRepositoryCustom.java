@@ -4,9 +4,7 @@ import java.util.List;
 
 public interface ProductRepositoryCustom {
 
-    List findAll(Float minPrice, Float maxPrice);
-
-    List findFilteredProducts(Float minPrice, Float maxPrice, Integer minReviewRating,
+    List findFilteredProducts(List<String> productIdList, Float minPrice, Float maxPrice, Integer minReviewRating,
                               Integer maxReviewRating, Integer minReviewCount, Integer maxReviewCount,
                               Boolean inStock);
 
