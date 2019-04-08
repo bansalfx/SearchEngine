@@ -4,7 +4,6 @@ import com.mohit.search.implementation.ProductRepositoryImpl;
 import com.mohit.search.model.Product;
 import com.mohit.search.model.ProductIndex;
 import com.mohit.search.repository.IndexRepository;
-import com.mohit.search.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,9 +16,6 @@ import java.util.List;
 
 @RestController
 public class SearchController {
-
-    @Autowired
-    ProductRepository productRepository;
 
     @Autowired
     IndexRepository indexRepository;

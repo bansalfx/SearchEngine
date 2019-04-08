@@ -1,4 +1,4 @@
-package com.mohit.search.search;
+package com.mohit.search;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
