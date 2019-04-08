@@ -11,12 +11,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-<<<<<<< HEAD
-import java.text.NumberFormat;
-import java.text.ParseException;
-
-=======
->>>>>>> 3d7550f907cb2e71605c935154777fc3193caaf5
 @Component
 public class ProductsCrawler {
     @Autowired
@@ -24,18 +18,12 @@ public class ProductsCrawler {
 
     @Autowired
     ProductRepository repository;
-<<<<<<< HEAD
 
     @Autowired
     ProductTermsIndexer indexer;
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
-=======
 
-    @Autowired
-    ProductTermsIndexer indexer;
-
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     public void crawl() {
         int productsCount = 30;
@@ -45,36 +33,6 @@ public class ProductsCrawler {
             for (Product product : walmartProducts.getProducts()) {
                 logger.info("Trying to insert -> {}", product.getProductName());
 
-                if (product != null && product.getShortDescription() != null) {
-                    String cleansedShortDescription = html2text(product.getShortDescription());
-                    product.setShortDescription(cleansedShortDescription);
-                }
-
-                if (product != null && product.getLongDescription() != null) {
-                    String cleansedLongDescription = html2text(product.getLongDescription());
-                    product.setLongDescription(cleansedLongDescription);
-                }
-                repository.save(product);
-            }
-            productsCount = walmartProducts.getProducts().size();
-        }
-        indexer.index();
-    }
-
-    public static String html2text(String html) {
-        return Jsoup.parse(html).text();
-    }
->>>>>>> 3d7550f907cb2e71605c935154777fc3193caaf5
-
-    public void crawl() {
-        int productsCount = 30;
-        int pageNumber = 1;
-        while(productsCount == 30 ) {
-            WalmartProducts walmartProducts = httpClient.getWalmartProducts(pageNumber++, 30);
-            for (Product product : walmartProducts.getProducts()) {
-                logger.info("Trying to insert -> {}", product.getProductName());
-
-<<<<<<< HEAD
                 if (product != null && product.getPrice() != null) {
                     String formattedPrice = product.getPrice().replaceAll("[$,]","");
                     product.setPrice(formattedPrice);
@@ -101,7 +59,4 @@ public class ProductsCrawler {
         return Jsoup.parse(html).text();
     }
 
-
-=======
->>>>>>> 3d7550f907cb2e71605c935154777fc3193caaf5
 }

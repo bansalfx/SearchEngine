@@ -33,8 +33,4 @@ public class HttpClient {
 
         return walmartProducts;
     }
-<<<<<<< HEAD:src/main/java/com/mohit/search/client/HttpClient.java
 }
-=======
-}
->>>>>>> 3d7550f907cb2e71605c935154777fc3193caaf5:src/main/java/com/mohit/search/client/HttpClient.java

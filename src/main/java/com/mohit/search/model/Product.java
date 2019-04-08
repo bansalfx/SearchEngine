@@ -1,10 +1,5 @@
 package com.mohit.search.model;
 
-<<<<<<< HEAD:src/main/java/com/mohit/search/model/Product.java
-import org.springframework.web.servlet.i18n.FixedLocaleResolver;
-
-=======
->>>>>>> 3d7550f907cb2e71605c935154777fc3193caaf5:src/main/java/com/mohit/search/model/Product.java
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -29,11 +24,8 @@ public class Product {
     private int reviewCount;
     private boolean inStock;
 
-<<<<<<< HEAD:src/main/java/com/mohit/search/model/Product.java
     private Float floatPrice;
 
-=======
->>>>>>> 3d7550f907cb2e71605c935154777fc3193caaf5:src/main/java/com/mohit/search/model/Product.java
     public Product( String productId, String productName, String shortDescription) {
         super();
         this.productId = productId;
