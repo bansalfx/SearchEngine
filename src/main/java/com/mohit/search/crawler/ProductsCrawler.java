@@ -33,7 +33,12 @@ public class ProductsCrawler {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-
+    /**
+     * Crawl and get the all the products from endpoint
+     * Massage the data to get it in desired format
+     * Clear the cache
+     * Index the text fields
+     */
     public void crawl() {
         int productsCount = 30;
         int pageNumber = 1;
@@ -65,10 +70,18 @@ public class ProductsCrawler {
         indexer.index();
     }
 
+    /**
+     * Convert HTMl text to normal text
+     * @param html
+     * @return
+     */
     public static String html2Text(String html) {
         return Jsoup.parse(html).text();
     }
 
+    /**
+     *  Clear cached data
+     */
     public void clearProductCache() {
         logger.info("Clearing all product cache");
         cacheManager.getCache("ProductCache").clear();

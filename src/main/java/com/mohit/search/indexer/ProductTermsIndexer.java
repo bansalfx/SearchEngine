@@ -31,6 +31,9 @@ public class ProductTermsIndexer {
     @Autowired
     IndexRepository indexRepository;
 
+    /**
+     * Iterate over all the product in batch of 30 and index all the text field.
+     */
     public void index(){
         int pageNumber = 0;
         int productsCount = 30;
@@ -50,6 +53,11 @@ public class ProductTermsIndexer {
         }
     }
 
+
+    /**
+     * Take Product in argument and create a inverted-index for all the words in the text fields of Product.
+     * @param product
+     */
     public void indexProductString(Product product){
 
         LOGGER.info("Indexing the product with product Id: {}", product.getProductId());

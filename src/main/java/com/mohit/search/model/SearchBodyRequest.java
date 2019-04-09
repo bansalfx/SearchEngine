@@ -1,26 +1,39 @@
 package com.mohit.search.model;
 
-import org.springframework.stereotype.Component;
-
+import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 
+/**
+ * Model class to accept the request parameter
+ */
 
-public class SearchRequestBody {
+public class SearchBodyRequest {
 
     private String search;
 
+    @Min(value = 0, message="Minimum price can be 0")
     private Float minPrice;
+
+    @Min(value = 0, message="Minimum price can be 0")
     private Float maxPrice;
 
-    @Min(value = 0 , message = "Minimum Review Rating can be 0")
-    @Min(value = 5 , message = "Maximum Review Rating can be 5")
+    @Min(value = 0, message="Minimum value of Minimum review Rating can be 0")
+    @Max(value = 5, message="Maximum value for Minimum review Rating can be 5")
     private Integer minReviewRating;
+
+    @Min(value = 0, message="Minimum value of Maximum review Rating can be 0")
+    @Max(value = 5, message="Maximum value for Maximum review Rating can be 5")
     private Integer maxReviewRating;
+
+    @Min(value = 0, message="Minimum review Count can be 0")
     private Integer minReviewCount;
+
+    @Min(value = 0, message="Minimum review Count can be 0")
     private Integer maxReviewCount;
+
     private Boolean inStock;
 
-    public SearchRequestBody(String search, Float minPrice, Float maxPrice, @Min(value = 0, message = "Minimum Review Rating can be 0") @Min(value = 5, message = "Maximum Review Rating can be 5") Integer minReviewRating, Integer maxReviewRating, Integer minReviewCount, Integer maxReviewCount, Boolean inStock) {
+    public SearchBodyRequest(String search, Float minPrice, Float maxPrice, @Min(value = 0, message = "Minimum Review Rating can be 0") @Min(value = 5, message = "Maximum Review Rating can be 5") Integer minReviewRating, Integer maxReviewRating, Integer minReviewCount, Integer maxReviewCount, Boolean inStock) {
         this.search = search;
         this.minPrice = minPrice;
         this.maxPrice = maxPrice;

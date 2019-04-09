@@ -1,11 +1,11 @@
 package com.mohit.search.repository;
 
+import com.mohit.search.model.SearchBodyRequest;
+
 import java.util.List;
 
 public interface ProductRepositoryCustom {
 
-    List findFilteredProducts(List<String> productIdList, Float minPrice, Float maxPrice, Integer minReviewRating,
-                              Integer maxReviewRating, Integer minReviewCount, Integer maxReviewCount,
-                              Boolean inStock);
+    List findFilteredProducts(List<String> productIdList, SearchBodyRequest searchBodyRequest);
 
 }

@@ -1,6 +1,7 @@
 package com.mohit.search.implementation;
 
 import com.mohit.search.model.Product;
+import com.mohit.search.model.SearchBodyRequest;
 import com.mohit.search.repository.ProductRepositoryCustom;
 import org.springframework.stereotype.Component;
 
@@ -21,35 +22,41 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
     @PersistenceContext
     private EntityManager entityManager;
 
+    /**
+     * Search from product in-mem database
+     * Build a predicateList based on the the search criteria provided
+     * @param productIdList
+     * @param searchBodyRequest
+     * @return
+     */
     @Override
-    public List findFilteredProducts(List<String> productIdList, Float minPrice, Float maxPrice, Integer minReviewRating, Integer maxReviewRating,
-                                     Integer minReviewCount, Integer maxReviewCount, Boolean inStock){
+    public List findFilteredProducts(List<String> productIdList, SearchBodyRequest searchBodyRequest){
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Product> query = builder.createQuery(Product.class);
         Root<Product> root = query.from(Product.class);
 
         List<Predicate> predicateList = new ArrayList<>();
 
-        if(minPrice != null){
-            predicateList.add(builder.greaterThanOrEqualTo(root.get("floatPrice"), minPrice));
+        if(searchBodyRequest.getMinPrice() != null){
+            predicateList.add(builder.greaterThanOrEqualTo(root.get("floatPrice"), searchBodyRequest.getMinPrice()));
         }
-        if(maxPrice != null){
-            predicateList.add(builder.lessThanOrEqualTo(root.get("floatPrice"), maxPrice));
+        if(searchBodyRequest.getMaxPrice() != null){
+            predicateList.add(builder.lessThanOrEqualTo(root.get("floatPrice"), searchBodyRequest.getMaxPrice()));
         }
-        if(minReviewRating != null){
-            predicateList.add(builder.greaterThanOrEqualTo(root.get("reviewRating"), minReviewRating));
+        if(searchBodyRequest.getMinReviewRating() != null){
+            predicateList.add(builder.greaterThanOrEqualTo(root.get("reviewRating"), searchBodyRequest.getMinReviewRating()));
         }
-        if(maxReviewRating != null){
-            predicateList.add(builder.lessThanOrEqualTo(root.get("reviewRating"), maxReviewRating));
+        if(searchBodyRequest.getMaxReviewRating() != null){
+            predicateList.add(builder.lessThanOrEqualTo(root.get("reviewRating"), searchBodyRequest.getMaxReviewRating()));
         }
-        if(minReviewCount != null){
-            predicateList.add(builder.greaterThanOrEqualTo(root.get("reviewCount"), minReviewCount));
+        if(searchBodyRequest.getMinReviewCount() != null){
+            predicateList.add(builder.greaterThanOrEqualTo(root.get("reviewCount"), searchBodyRequest.getMinReviewCount()));
         }
-        if(maxReviewCount != null){
-            predicateList.add(builder.lessThanOrEqualTo(root.get("reviewCount"), maxReviewCount));
+        if(searchBodyRequest.getMaxReviewCount() != null){
+            predicateList.add(builder.lessThanOrEqualTo(root.get("reviewCount"), searchBodyRequest.getMaxReviewCount()));
         }
-        if(inStock != null){
-            predicateList.add(builder.equal(root.get("inStock"), inStock));
+        if(searchBodyRequest.getInStock() != null){
+            predicateList.add(builder.equal(root.get("inStock"), searchBodyRequest.getInStock()));
         }
         if(!productIdList.isEmpty()) {
             Expression<String> exp = root.get("productId");
