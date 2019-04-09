@@ -1,7 +1,6 @@
 package com.mohit.search.controller;
 
 import com.mohit.search.implementation.ProductRepositoryImpl;
-import com.mohit.search.model.Product;
 import com.mohit.search.model.ProductIndex;
 import com.mohit.search.model.SearchBodyRequest;
 import com.mohit.search.repository.IndexRepository;
@@ -12,15 +11,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.Size;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 
@@ -74,18 +69,6 @@ public class SearchController {
             }
             return new ResponseEntity<>(returnProductList, HttpStatus.OK);
         }
-    }
-
-
-    @GetMapping("/searchenginetest")
-    public String searchProductTest(@Valid SearchBodyRequest searchBodyRequest, BindingResult bindingResult) {
-
-        StringBuilder sb = new StringBuilder();
-        List<FieldError> errors = bindingResult.getFieldErrors();
-        for (FieldError error : errors) {
-            sb.append("Error in: " + error.getField() + " : " + error.getDefaultMessage() + "\n");
-        }
-        return sb.toString();
     }
 
 }
