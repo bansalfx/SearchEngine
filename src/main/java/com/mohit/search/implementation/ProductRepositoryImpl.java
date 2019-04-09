@@ -8,7 +8,12 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+
+/**
+ * This class search the in-mem database and return
+ */
 
 @Component
 public class ProductRepositoryImpl implements ProductRepositoryCustom {
@@ -51,8 +56,15 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
             predicateList.add(exp.in(productIdList));
         }
 
-        query.where(builder.and(predicateList.toArray(new Predicate[0])));
+        if(!predicateList.isEmpty()){
+            query.where(builder.and(predicateList.toArray(new Predicate[0])));
 
-        return entityManager.createQuery(query.select(root)).getResultList();
+            return entityManager.createQuery(query.select(root)).getResultList();
+        }else{
+            //No Results Found
+            return Collections.emptyList();
+        }
+
+
     }
 }

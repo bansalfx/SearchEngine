@@ -5,6 +5,10 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+/**
+ * Model class to accept the API response
+ */
+
 @Component
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class WalmartProducts {

@@ -9,7 +9,13 @@ import org.jsoup.Jsoup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
 import org.springframework.stereotype.Component;
+
+/**
+ * This class crawl and obtain the entire set of products from API Endpoint.
+ * It also invalidate/clear the cache after the crawling is finished.
+ */
 
 @Component
 public class ProductsCrawler {
@@ -17,10 +23,13 @@ public class ProductsCrawler {
     HttpClient httpClient;
 
     @Autowired
-    ProductRepository repository;
+    ProductRepository productRepository;
 
     @Autowired
     ProductTermsIndexer indexer;
+
+    @Autowired
+    CacheManager cacheManager;
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -35,28 +44,36 @@ public class ProductsCrawler {
 
                 if (product != null && product.getPrice() != null) {
                     String formattedPrice = product.getPrice().replaceAll("[$,]","");
-                    product.setPrice(formattedPrice);
                     product.setFloatPrice(Float.parseFloat(formattedPrice));
                 }
 
                 if (product != null && product.getShortDescription() != null) {
-                    String cleansedShortDescription = html2text(product.getShortDescription());
+                    String cleansedShortDescription = html2Text(product.getShortDescription());
                     product.setShortDescription(cleansedShortDescription);
                 }
 
                 if (product != null && product.getLongDescription() != null) {
-                    String cleansedLongDescription = html2text(product.getLongDescription());
+                    String cleansedLongDescription = html2Text(product.getLongDescription());
                     product.setLongDescription(cleansedLongDescription);
                 }
-                repository.save(product);
+
+                productRepository.save(product);
             }
             productsCount = walmartProducts.getProducts().size();
         }
+        clearProductCache();
         indexer.index();
     }
 
-    public static String html2text(String html) {
+    public static String html2Text(String html) {
         return Jsoup.parse(html).text();
     }
+
+    public void clearProductCache() {
+        logger.info("Clearing all product cache");
+        cacheManager.getCache("ProductCache").clear();
+        logger.info("Product cache cleared");
+    }
+
 
 }

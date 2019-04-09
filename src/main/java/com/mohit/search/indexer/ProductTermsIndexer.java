@@ -16,6 +16,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * This class is used to create Inverted index using the string field in Product.
+ */
+
 @Component
 @Transactional
 public class ProductTermsIndexer {
@@ -29,22 +33,26 @@ public class ProductTermsIndexer {
 
     public void index(){
         int pageNumber = 0;
-        Pageable pageRequestWith30Items = PageRequest.of(pageNumber++, 30);
-        Page<Product> productPage = repository.findAll(pageRequestWith30Items);
-        productPage.getNumberOfElements();
-        long totalElements = productPage.getTotalElements();
-        LOGGER.info("Total Elements: {}", totalElements);
-        LOGGER.info("Number of elements in this page: {}", productPage.getNumberOfElements());
-        List<Product> productList = productPage.getContent();
+        int productsCount = 30;
 
-        for(Product product : productList) {
-            LOGGER.info("Indexing the product with product Id: {}", product.getProductId());
-            indexProductString(product);
+        while(productsCount == 30){
+            Pageable pageRequestWith30Items = PageRequest.of(pageNumber++, 30);
+            Page<Product> productPage = repository.findAll(pageRequestWith30Items);
+
+            LOGGER.info("Number of elements in this page: {}", productPage.getNumberOfElements());
+            List<Product> productList = productPage.getContent();
+            productsCount = productList.size();
+
+            for(Product product : productList) {
+                indexProductString(product);
+            }
+
         }
     }
 
     public void indexProductString(Product product){
 
+        LOGGER.info("Indexing the product with product Id: {}", product.getProductId());
         StringBuilder sb = new StringBuilder();
         if(product != null && product.getProductName() != null){
             sb.append(product.getProductName().replaceAll("[^a-zA-Z0-9\\s+]", " "));
@@ -56,22 +64,20 @@ public class ProductTermsIndexer {
             sb.append(product.getLongDescription().replaceAll("[^a-zA-Z0-9\\s+]", " "));
         }
 
-        String[] keywordList = sb.toString().replaceAll("  ", " ").split(" ");
+        String[] keywordList = sb.toString().split(" ");
 
         for(String keyword: keywordList){
 
             if(indexRepository.findById(keyword).isPresent()){
                 ProductIndex productIndex = indexRepository.getOne(keyword);
-                List<String> documentIDList = productIndex.getDocumentID();
+                List<String> documentIDList = productIndex.getDocumentIds();
                 if(!documentIDList.contains(product.getProductId())){
                     documentIDList.add(product.getProductId());
                     indexRepository.save(new ProductIndex(keyword,documentIDList));
                 }
-                LOGGER.info("Keyword is present: "+ keyword);
             }else{
                 List<String> documentIDList = Arrays.asList(product.getProductId());
                 indexRepository.save(new ProductIndex(keyword,documentIDList));
-                LOGGER.info("Keyword is not present: "+ keyword);
             }
 
         }

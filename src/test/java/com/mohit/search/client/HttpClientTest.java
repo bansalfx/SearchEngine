@@ -1,10 +1,6 @@
 package com.mohit.search.client;
 
 import com.mohit.search.model.WalmartProducts;
-import org.junit.Rule;
-import org.junit.rules.ExpectedException;
-import org.mockito.Mock;
-import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.testng.Assert;
 import org.testng.annotations.Test;

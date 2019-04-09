@@ -6,6 +6,10 @@ import javax.persistence.Id;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Model class for Inverted  Index Object
+ */
+
 @Entity
 public class ProductIndex {
 
@@ -13,11 +17,11 @@ public class ProductIndex {
     private String keywordIndex;
 
     @ElementCollection
-    private List<String> documentID = new ArrayList<String>();;
+    private List<String> documentIds = new ArrayList<String>();
 
-    public ProductIndex(String keywordIndex, List<String> documentID) {
+    public ProductIndex(String keywordIndex, List<String> documentIds) {
         this.keywordIndex = keywordIndex;
-        this.documentID = documentID;
+        this.documentIds = documentIds;
     }
 
     public ProductIndex(){
@@ -32,11 +36,11 @@ public class ProductIndex {
         this.keywordIndex = keywordIndex;
     }
 
-    public List<String> getDocumentID() {
-        return documentID;
+    public List<String> getDocumentIds() {
+        return documentIds;
     }
 
-    public void setDocumentID(List<String> documentID) {
-        this.documentID = documentID;
+    public void setDocumentIds(List<String> documentIds) {
+        this.documentIds = documentIds;
     }
 }

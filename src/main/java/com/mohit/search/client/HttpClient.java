@@ -10,6 +10,10 @@ import org.springframework.web.client.RestTemplate;
 
 import java.nio.charset.Charset;
 
+/**
+ * This class talks to Product End-Point to get the list of Products {@link WalmartProducts}
+ */
+
 @Component
 public class HttpClient {
     private static final Logger LOGGER = LoggerFactory.getLogger(HttpClient.class);
@@ -27,9 +31,16 @@ public class HttpClient {
         StringBuilder sb = new StringBuilder();
         sb.append(baseUrl).append("/").append(WALMART_PRODUCTS).append("/").append(pageNumber).append("/").append(itemsCount);
         String url = sb.toString();
-        restTemplate.getMessageConverters()
-                .add(0, new StringHttpMessageConverter(Charset.forName("UTF-8")));
-        WalmartProducts walmartProducts = restTemplate.getForObject(url, WalmartProducts.class);
+        WalmartProducts walmartProducts = new WalmartProducts();
+
+        try{
+            restTemplate.getMessageConverters()
+                    .add(0, new StringHttpMessageConverter(Charset.forName("UTF-8")));
+            walmartProducts = restTemplate.getForObject(url, WalmartProducts.class);
+        }catch (Exception ex){
+            LOGGER.error("Error Connecting to Base End-Point");
+            LOGGER.error(ex.toString());
+        }
 
         return walmartProducts;
     }

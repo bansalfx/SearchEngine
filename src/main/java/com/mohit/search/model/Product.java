@@ -5,9 +5,12 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 
+/**
+ * Model class for Product
+ */
+
 @Entity
 public class Product {
-
 
     @Id
     private String productId;
