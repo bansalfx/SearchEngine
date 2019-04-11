@@ -6,7 +6,6 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class ProductCrawlerTest {
-
     @Autowired
     CacheManager cacheManager;
 

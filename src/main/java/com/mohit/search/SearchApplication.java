@@ -17,16 +17,14 @@ import org.springframework.web.client.RestTemplate;
  * This is our main class.
  */
 
-@Configuration
 @SpringBootApplication
+@Configuration
 @EnableCaching
 @EnableScheduling
 public class SearchApplication implements CommandLineRunner {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SearchApplication.class);
 
-    @Autowired
-    ProductsCrawler crawler;
 
     @Bean
     public RestTemplate restTemplate(){
@@ -41,11 +39,7 @@ public class SearchApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        try{
-            crawler.crawl();
-        }catch (Exception ex){
-            throw new Exception();
-        }
+
     }
 
 
