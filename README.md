@@ -1,10 +1,19 @@
-# SearchEngine
+# Product SearchEngine
 
-# Walmart Customer Experience – Take Home Assignment
+# Requirement
+Java8
+Maven
+
+# Run Instruction
+Maven Run Command
+`mvn spring-boot:run`
+
+Swagger Documentation:
+http://localhost:8080/swagger-ui.html#/search-controller/searchProductUsingGET
 
 # _Project Workflow:_
 
-My Approach to the take home assignment was to consider this assignment as one big project and divide it in phases. The flow of phases I followed are as below:
+The flow of phases that I followed are as below:
 
 1. Requirement Gathering
     1. Understand and look deeply into requirement
