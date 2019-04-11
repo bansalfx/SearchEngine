@@ -39,9 +39,9 @@ public class ProductsCrawler {
      * Massage the data to get it in desired format
      * Clear the cache
      * Index the text fields
-     * Crawl function is scheduled to run every 5 Hour and  fetch any update in product information
+     * Crawl function is scheduled to run every 5 Hour(5hr*60min*60sec*1000ms = 18000000ms) and  fetch any update in product information
      */
-    @Scheduled(fixedRate = 5*60*60*1000)
+    @Scheduled(fixedRate = 18000000)
     public void crawl() {
         int productsCount = 30;
         int pageNumber = 1;
