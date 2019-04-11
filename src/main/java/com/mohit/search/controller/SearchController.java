@@ -42,8 +42,8 @@ public class SearchController {
             List<FieldError> errors = bindingResult.getFieldErrors();
             List<Object> message = new ArrayList<>();
             message.add("Validation Error:");
-            for (FieldError e : errors){
-                message.add(e.getField().toUpperCase() + ":" + e.getDefaultMessage());
+            for (FieldError error : errors){
+                message.add(error.getField().toUpperCase() + ":" + error.getDefaultMessage());
             }
             return new ResponseEntity<>(message,HttpStatus.BAD_REQUEST);
         }else {

@@ -29,6 +29,7 @@ public class Product {
 
     private Float floatPrice;
 
+
     public Product( String productId, String productName, String shortDescription) {
         super();
         this.productId = productId;

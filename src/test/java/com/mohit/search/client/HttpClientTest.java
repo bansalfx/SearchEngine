@@ -41,10 +41,6 @@ public class HttpClientTest {
             Assert.assertEquals(ex.toString().contains("400 Bad Request"),true);
         }
 
-
-
-
-
     }
 
 }

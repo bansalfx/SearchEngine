@@ -3,13 +3,14 @@ package com.mohit.search.crawler;
 import com.mohit.search.client.HttpClient;
 import com.mohit.search.indexer.ProductTermsIndexer;
 import com.mohit.search.model.Product;
-import com.mohit.search.repository.ProductRepository;
 import com.mohit.search.model.WalmartProducts;
+import com.mohit.search.repository.ProductRepository;
 import org.jsoup.Jsoup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 /**
@@ -38,7 +39,9 @@ public class ProductsCrawler {
      * Massage the data to get it in desired format
      * Clear the cache
      * Index the text fields
+     * Crawl function is scheduled to run every 5 Hour and  fetch any update in product information
      */
+    @Scheduled(fixedRate = 5*60*60*1000)
     public void crawl() {
         int productsCount = 30;
         int pageNumber = 1;

@@ -10,15 +10,20 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.client.RestTemplate;
 
+/**
+ * This is our main class.
+ */
 
 @Configuration
 @SpringBootApplication
 @EnableCaching
+@EnableScheduling
 public class SearchApplication implements CommandLineRunner {
 
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
+    private static final Logger LOGGER = LoggerFactory.getLogger(SearchApplication.class);
 
     @Autowired
     ProductsCrawler crawler;
@@ -36,7 +41,11 @@ public class SearchApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        crawler.crawl();
+        try{
+            crawler.crawl();
+        }catch (Exception ex){
+            throw new Exception();
+        }
     }
 
 

@@ -49,7 +49,6 @@ public class ProductTermsIndexer {
             for(Product product : productList) {
                 indexProductString(product);
             }
-
         }
     }
 
@@ -75,7 +74,6 @@ public class ProductTermsIndexer {
         String[] keywordList = sb.toString().split(" ");
 
         for(String keyword: keywordList){
-
             if(indexRepository.findById(keyword).isPresent()){
                 ProductIndex productIndex = indexRepository.getOne(keyword);
                 List<String> documentIDList = productIndex.getDocumentIds();
@@ -87,7 +85,6 @@ public class ProductTermsIndexer {
                 List<String> documentIDList = Arrays.asList(product.getProductId());
                 indexRepository.save(new ProductIndex(keyword,documentIDList));
             }
-
         }
     }
 

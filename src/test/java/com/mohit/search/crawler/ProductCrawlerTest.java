@@ -1,12 +1,7 @@
 package com.mohit.search.crawler;
 
-import com.mohit.search.client.HttpClient;
-import com.mohit.search.model.Product;
-import com.mohit.search.model.WalmartProducts;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
-import org.springframework.web.client.RestTemplate;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -17,11 +12,6 @@ public class ProductCrawlerTest {
 
     @Autowired
     ProductsCrawler productsCrawler;
-
-    @Test
-    public void testSearchProduct() {
-
-    }
 
     @Test
     public void testHtml2Text(){
@@ -39,13 +29,6 @@ public class ProductCrawlerTest {
 
         // Assert
         Assert.assertEquals(testString, "My First Heading My first paragraph.");
-    }
-
-
-    @Test
-    public void testClearProductCache() {
-            // todo
-
     }
 
 }
